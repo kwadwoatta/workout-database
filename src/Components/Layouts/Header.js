@@ -6,11 +6,9 @@ import {
   Typography,
   }  from '@material-ui/core'
 
-import {Menu as MenuIcon} from '@material-ui/icons'
+import CreateDialogIcon from '../Exercises/Dialogs/Create'
 
-import {
-  makeStyles
-  }  from '@material-ui/styles'
+import { makeStyles }  from '@material-ui/styles'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -21,24 +19,18 @@ const useStyles = makeStyles(theme => ({
   // },
 }));
 
-const Header = props => {
+const Header = ({muscles, onCreateExercise}) => {
   const classes = useStyles();
   return (
-    // <AppBar position="static">
-    //     <Toolbar variant="dense">
-    //       <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="Menu">
-    //         <MenuIcon />
-    //       </IconButton>
-    //       <Typography variant="h6" color="inherit">
-    //         Photos
-    //       </Typography>
-    //     </Toolbar>
-    //   </AppBar>
-    <AppBar position="static">
+    <AppBar position="static" className={classes.root}>
       <Toolbar variant="dense">
-        <Typography variant="overline" color="inherit">
+        <Typography variant="overline" color="inherit" style={{flexGrow: 1}}>
           Workout Database
         </Typography>
+        <CreateDialogIcon 
+          muscles={muscles}
+          onCreate={onCreateExercise}
+        />
       </Toolbar>
     </AppBar>
   )

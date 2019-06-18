@@ -6,43 +6,43 @@ export const muscles = [
     {
       id: 'overhead-press',
       title: 'Overhead Press',
-      description: 'Delts exercise...',
+      description: 'Delts workout...',
       muscles: 'shoulders'
     },
     {
       id: 'dips',
       title: 'Dips',
-      description: 'Triceps exercise...',
+      description: 'Triceps workout...',
       muscles: 'arms'
     },
     {
       id: 'barbell-curls',
       title: 'Barbell Curls',
-      description: 'Biceps exercise...',
+      description: 'Biceps workout...',
       muscles: 'arms'
     },
     {
       'id': 'bench-press',
       title: 'Bench Press',
-      description: 'Chest exercise...',
+      description: 'Chest workout...',
       muscles: 'chest'
     },
     {
       id: 'pull-ups',
       title: 'Pull Ups',
-      description: 'Back and biceps exercise...',
+      description: 'Back and biceps workout...',
       muscles: 'back'
     },
     {
       id: 'deadlifts',
       title: 'Deadlifts',
-      description: 'Back and leg exercise...',
+      description: 'Back and leg workout...',
       muscles: 'back'
     },
     {
       id: 'squats',
       title: 'Squats',
-      description: 'Legs exercise...',
+      description: 'Legs workout...',
       muscles: 'legs'
     },
   ]
