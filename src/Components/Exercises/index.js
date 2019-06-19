@@ -5,11 +5,15 @@ import {
   Typography,
   List,
   ListItem,
-  ListItemText 
+  ListItemText,
+  ListItemSecondaryAction,
+  IconButton 
 } from '@material-ui/core'
-
+import {Delete as DeleteIcon, Edit as EditIcon} from '@material-ui/icons'
 // import RightPane from './RightPane'
 // import LeftPane from './LeftPane'
+
+import Form from './Form'
 
 const styles = {
   Paper: {
@@ -22,9 +26,15 @@ const styles = {
 }
 
 export default ({
+  muscles,
+  exercise,
   exercises, 
   category, 
-  onSelect, 
+  onSelect,
+  onDelete, 
+  onEdit,
+  editMode,
+  onEditForm,
   exercise: {
     id, 
     title = 'Welcome!', 
@@ -50,6 +60,14 @@ export default ({
                   onClick={() => { onSelect(id) }}
                   >
                     <ListItemText primary={title} />
+                    <ListItemSecondaryAction>
+                      <IconButton onClick={() => onEdit(id)}>
+                        <EditIcon/>
+                      </IconButton>
+                      <IconButton onClick={() => onDelete(id)}>
+                        <DeleteIcon/>
+                      </IconButton>
+                    </ListItemSecondaryAction>
                   </ListItem>
                 )}
               </List>
@@ -60,15 +78,25 @@ export default ({
     </Grid>
     <Grid item xs={6}>
       <Paper style={styles.Paper}>
-        <Typography
-          variant="h6">
-            {title}
-          </Typography>
-        <Typography
-          style={{marginTop: 20}}
-          variant="body2">
-            {description}
-          </Typography>
+        {
+          editMode ? 
+          <Form
+            exercise={exercise}
+            muscles={muscles}
+            onSubmit={onEditForm}
+          />
+          : <Fragment>
+              <Typography
+                variant="h6">
+                  {title}
+                </Typography>
+              <Typography
+                style={{marginTop: 20}}
+                variant="body2">
+                  {description}
+                </Typography>
+            </Fragment>
+        }
       </Paper>
     </Grid>
   </Grid>

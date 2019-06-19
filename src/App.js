@@ -8,10 +8,16 @@ export default class App extends Component {
   state = { 
     exercises,
     exercise: {},
-    category: ''
+    category: '',
+    editMode: false
   }
 
   getExercisesByMuscles() {
+    const initialWorkouts = muscles.reduce((exercises, category) => ({
+      ...exercises,
+      [category]: []
+    }), {})
+
     return Object.entries(this.state.exercises.reduce((exercises, exercise) => {
       const {muscles} = exercise;
 
@@ -20,7 +26,7 @@ export default class App extends Component {
       : [exercise]
 
       return exercises
-    }, {}))
+    }, initialWorkouts))
   }
 
   handleCategorySelected = category => {
@@ -29,24 +35,49 @@ export default class App extends Component {
     })
   }
 
-  handleExerciseSelected = id => {
+  handleExerciseSelected = id => 
     this.setState(({ exercises }) => ({
-      exercise: exercises.find(ex => ex.id === id)
+      exercise: exercises.find(ex => ex.id === id),
+      editMode: false
     }))
-  }
+  
 
-  handleExerciseCreate = exercise => {
+  handleExerciseCreate = exercise => 
     this.setState(({ exercises }) => ({
         exercises: [
           ...exercises,
           exercise
         ]
     }))
-  }
+  
+
+  handleExerciseDelete = id => 
+    this.setState(({exercises}) => ({
+      exercises: exercises.filter(exercise => exercise.id !== id),
+      editMode: false,
+      exercise: {}
+    }))
+  
+
+  handleWorkoutEdit = id => 
+    this.setState(({ exercises }) => ({
+      exercise: exercises.find(ex => ex.id === id),
+      editMode: true
+    }))
+  
+    handleExerciseEdit = exercise => {
+      this.setState(({ exercises: prevStateExercises }) => ({
+        exercises: [
+          ...prevStateExercises.filter(exes => exes.id !== exercise.id),
+          exercise
+        ],
+        exercise
+      }))
+    }
 
   render() {  
     const exercises = this.getExercisesByMuscles();
-    let { category, exercise } = this.state;
+    let { category, exercise, editMode } = this.state;
 
     return (
       <Fragment>
@@ -55,10 +86,15 @@ export default class App extends Component {
           onCreateExercise={this.handleExerciseCreate}
         />
         <Exercises 
+          muscles={muscles}
           exercise={exercise}
           exercises={exercises}
           category={category}
           onSelect={this.handleExerciseSelected}
+          onDelete={this.handleExerciseDelete}
+          onEdit={this.handleWorkoutEdit}
+          editMode={editMode}
+          onEditForm={this.handleExerciseEdit}
         />
         <Footer 
           category={category}

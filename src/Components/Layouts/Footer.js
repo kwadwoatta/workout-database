@@ -5,13 +5,13 @@ import {
   Tab,
 } from '@material-ui/core'
 
-import {makeStyles} from '@material-ui/styles'
+// import {makeStyles} from '@material-ui/styles'
 
-const useStyles = makeStyles({
-  root: {
-    flexGrow: 1,
-  },
-});
+// const useStyles = makeStyles({
+//   root: {
+//     flexGrow: 1,
+//   },
+// });
 
 const Footer = ({ muscles, onSelect, category }) => {
   // const classes = useStyles();
