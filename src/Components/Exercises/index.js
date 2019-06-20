@@ -8,24 +8,51 @@ import {
   ListItemText,
   ListItemSecondaryAction,
   IconButton 
-} from '@material-ui/core'
-import {Delete as DeleteIcon, Edit as EditIcon} from '@material-ui/icons'
-// import RightPane from './RightPane'
-// import LeftPane from './LeftPane'
+} from '@material-ui/core';
+import {
+  Delete as DeleteIcon, 
+  Edit as EditIcon
+} from '@material-ui/icons';
+import {withStyles} from '@material-ui/styles'
 
 import Form from './Form'
 
-const styles = {
+const styles = theme => ({
   Paper: {
-    padding: 20, 
-    marginTop: 10, 
-    marginBottom: 10,
-    height: 500,
-    overflowY: 'auto'
+    padding: 20,
+    overflowY: 'auto',
+    [theme.breakpoints.up('sm')]: {
+      marginTop: 5,
+      height: 'calc(100% - 60px - 60px)'
+    },
+    [theme.breakpoints.down('xs')]: {
+      height: '100%'
+    },
+    // marginBottom: 10,
+    // height: 500
+  },
+  '@global': {
+    'html, body, #root': {
+      height: '100%'
+    }
+  },
+  Container: {
+    [theme.breakpoints.up('sm')]: {
+      height: 'calc(100% - 48px - 48px)'
+    },
+    [theme.breakpoints.down('xs')]: {
+      height: 'calc(100% - 48px - 48px)'
+    }
+  },
+  item: {
+    [theme.breakpoints.down('xs')]: {
+      height: '50%'
+    }
   }
-}
+})
 
-export default ({
+export default withStyles(styles)(({
+  classes,
   muscles,
   exercise,
   exercises, 
@@ -41,15 +68,17 @@ export default ({
     description = 'Please select an exercise from the list on the left.'
   }
 }) => 
-  <Grid container spacing={1}>
-    <Grid item xs={6}>
-      <Paper style={styles.Paper}>
+  <Grid container spacing={1} className={classes.Container}>
+    <Grid item xs={12} sm={6} className={classes.item}>
+      <Paper className={classes.Paper}>
         {exercises.map(([group, exercises]) =>
           !category || category === group 
           ? <Fragment key={group}>
               <Typography 
                 variant="h6"
-                style={{textTransform: 'capitalize'}}>
+                style={{textTransform: 'capitalize'}}
+                color="secondary"
+                >
                 {group}
               </Typography>
               <List component="ul">
@@ -61,10 +90,10 @@ export default ({
                   >
                     <ListItemText primary={title} />
                     <ListItemSecondaryAction>
-                      <IconButton onClick={() => onEdit(id)}>
+                      <IconButton  color="primary" onClick={() => onEdit(id)}>
                         <EditIcon/>
                       </IconButton>
-                      <IconButton onClick={() => onDelete(id)}>
+                      <IconButton  color="primary" onClick={() => onDelete(id)}>
                         <DeleteIcon/>
                       </IconButton>
                     </ListItemSecondaryAction>
@@ -76,27 +105,30 @@ export default ({
         )}
       </Paper>
     </Grid>
-    <Grid item xs={6}>
-      <Paper style={styles.Paper}>
+    <Grid item xs={12} sm={6} className={classes.item}>
+      <Paper className={classes.Paper}>
+        <Typography
+            variant="h6"
+            gutterBottom
+            color="secondary"
+          >
+              {title}
+            </Typography>
         {
           editMode ? 
           <Form
+            key={id}
             exercise={exercise}
             muscles={muscles}
             onSubmit={onEditForm}
           />
-          : <Fragment>
-              <Typography
-                variant="h6">
-                  {title}
-                </Typography>
-              <Typography
-                style={{marginTop: 20}}
-                variant="body2">
-                  {description}
-                </Typography>
-            </Fragment>
+          : 
+            <Typography
+              variant="body2">
+              {description}
+            </Typography>
         }
       </Paper>
     </Grid>
   </Grid>
+)

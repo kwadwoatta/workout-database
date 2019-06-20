@@ -11,7 +11,7 @@ import {
 import {withStyles} from '@material-ui/core/styles'
 
 
-const useStyles = theme => ({
+const useStyles = theme => console.log(theme) || ({
     formControl: {
         width: 300,
         marginLeft: 10,
@@ -39,14 +39,13 @@ export default withStyles(useStyles)(class extends Component {
         }
     }
 
-    componentWillReceiveProps({exercise}) {
-        this.setState({
-            workouts: {...exercise}
-        })
-    }
+    // static getDerivedStateFromProps({exercise}) {
+    //     console.log('fired')
+    //     return exercise || null
+    // }
 
     handleChange = name => ({target: { value }}) => {
-        console.log(value)
+        // console.log(value)
         this.setState({
             workouts: {
                 ...this.state.workouts,
@@ -69,16 +68,6 @@ export default withStyles(useStyles)(class extends Component {
             id: workouts.title.toLocaleLowerCase().replace(/ /g, '-'),
             ...workouts
         })
-
-        this.getInitialState()
-        // this.setState({
-        //     open: false,
-        //     workouts: {
-        //         title: '',
-        //         description: '',
-        //         muscles: ''
-        //     }
-        // })
     }
     
     render() {
@@ -130,6 +119,7 @@ export default withStyles(useStyles)(class extends Component {
                     variant="contained"
                     onClick={this.handleSubmit}
                     style={{margin: 10}}
+                    disabled={!title | !description}
                 >
                     {this.props.exercise ? 'Edit':'Create'}
                 </Button>

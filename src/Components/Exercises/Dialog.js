@@ -38,14 +38,17 @@ export default class extends Component {
                     <Fab 
                         size="small"
                         onClick={this.handleToggle}
+                        color="secondary"
                     >
                         <AddIcon fontSize="small"/>
                     </Fab>
                 </Tooltip>
 
-                <Dialog aria-labelledby="form-dialog-title" 
+                <Dialog 
+                    aria-labelledby="form-dialog-title" 
                     open={open}
                     onClose={this.handleToggle}
+                    maxWidth="md"
                 >
                     <DialogTitle id="form-dialog-title">
                         Create a New Workout

@@ -1,4 +1,5 @@
 import React, {Component, Fragment} from "react";
+import {CssBaseline} from '@material-ui/core';
 
 import { Header, Footer } from './Components/Layouts';
 import Exercises from './Components/Exercises';
@@ -52,10 +53,10 @@ export default class App extends Component {
   
 
   handleExerciseDelete = id => 
-    this.setState(({exercises}) => ({
+    this.setState(({exercises, exercise, editMode}) => ({
       exercises: exercises.filter(exercise => exercise.id !== id),
-      editMode: false,
-      exercise: {}
+      editMode: exercise.id === id ? false: editMode,
+      exercise: exercise.id === id ? {} : exercise
     }))
   
 
@@ -81,6 +82,7 @@ export default class App extends Component {
 
     return (
       <Fragment>
+      <CssBaseline/>
         <Header
           muscles={muscles}
           onCreateExercise={this.handleExerciseCreate}

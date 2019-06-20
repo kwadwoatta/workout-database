@@ -1,9 +1,10 @@
 import React from 'react';
 import {
-  Paper,
+  AppBar,
   Tabs,
   Tab,
-} from '@material-ui/core'
+} from '@material-ui/core';
+import {withWidth} from '@material-ui/core'
 
 // import {makeStyles} from '@material-ui/styles'
 
@@ -13,7 +14,7 @@ import {
 //   },
 // });
 
-const Footer = ({ muscles, onSelect, category }) => {
+const Footer = withWidth()(({ muscles, onSelect, category, width }) => {
   // const classes = useStyles();
   // const [value, setValue] = React.useState(0);
 
@@ -30,19 +31,21 @@ const Footer = ({ muscles, onSelect, category }) => {
     }
 
   return (
-    <Paper >
+    <AppBar position="static" style={{flexGrow: 1}}>
       <Tabs
         value={value}
         onChange={onIndexSelect}
-        indicatorColor="primary"
-        textColor="primary"
-        centered
+        indicatorColor="secondary"
+        textColor="secondary"
+        centered={width !== 'xs'}
+        variant={width === 'xs'?"scrollable": null}
+        scrollButtons="on"
       >
         <Tab label="All" />
         {muscles.map(muscle => <Tab label={muscle} key={muscle} />)}
       </Tabs>
-    </Paper>
+    </AppBar>
   )
-}
+})
 
 export default Footer;
